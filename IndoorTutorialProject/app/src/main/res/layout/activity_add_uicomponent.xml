@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_add_uicomponent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <fragment
+                android:id="@+id/fragment_mapview"
+                android:name="com.dabeeo.maps.indoormap.MapView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_add_uicomponent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Add\nItem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/btn_remove_uicomponent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Remove\nItem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btn_add_uicomponent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_extend_view" />
+
+        <Button
+            android:id="@+id/btn_extend_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="extend\nView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btn_remove_uicomponent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_reduce_view" />
+
+        <Button
+            android:id="@+id/btn_reduce_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="reduce\nView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btn_extend_view"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

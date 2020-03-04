@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">IndoorSDK Tutorial App</string>
+    <string name="error_message">에러 발생</string>
+</resources>

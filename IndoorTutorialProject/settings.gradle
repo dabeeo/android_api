@@ -1,0 +1,2 @@
+include ':app', ':com.dabeeo.maps.indoormap-v1.0.0-release'
+rootProject.name='IndoorSampleProject'
