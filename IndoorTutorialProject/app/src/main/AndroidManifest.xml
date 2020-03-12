@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".MyApp"
@@ -30,6 +33,11 @@
         <activity android:name=".view.event.DrawObjectsEventActivity" />
         <activity android:name=".view.animation.MapAnimationActivity" />
         <activity android:name=".view.navigation.PreviewActivity" />
+        <activity android:name=".view.vps.VPSActivity"/>
+
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import com.dabeeo.indoor.sample.view.event.DrawObjectsEventActivity
 import com.dabeeo.indoor.sample.view.event.PoiEventActivity
 import com.dabeeo.indoor.sample.view.navigation.PreviewActivity
 import com.dabeeo.indoor.sample.view.uicomponent.AddUIComponentActivity
+import com.dabeeo.indoor.sample.view.vps.VPSActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         Menu(PoiEventActivity::class.java, "4. Add Event (Map Poi)"),
         Menu(DrawObjectsEventActivity::class.java, "5. Add Event (Custom DrawObjects)"),
         Menu(MapAnimationActivity::class.java, "6. Map Animation"),
-        Menu(PreviewActivity::class.java, "7. Preview")
+        Menu(PreviewActivity::class.java, "7. Preview"),
+        Menu(VPSActivity::class.java, "8. VPSFragment")
     )
 
     private val mAdapterCallback = object : MenuAdapter.IMenuAdapterCallback {
