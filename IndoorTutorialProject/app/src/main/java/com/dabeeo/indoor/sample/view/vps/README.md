@@ -31,4 +31,4 @@ Dabeeo VPS는 Google AR Core 기술을 이용합니다.
 1. 내 위치 측위
 2. 2DContent 추가
 
-![동영상](./sample.mp4)
+<img src="sample.gif" width="236.5" height="500" />
