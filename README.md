@@ -13,6 +13,7 @@
 5. [Add Event (Custom DrawObjects)](/IndoorTutorialProject/app/src/main/java/com/dabeeo/indoor/sample/view/event/)
 6. [Map Animation](/IndoorTutorialProject/app/src/main/java/com/dabeeo/indoor/sample/view/animation/)
 7. [Preview](/IndoorTutorialProject/app/src/main/java/com/dabeeo/indoor/sample/view/navigation/)
+8. [VPS](/IndoorTutorialProject/app/src/main/java/com/dabeeo/indoor/sample/view/vps/)
 
 
 ## Download
@@ -22,39 +23,42 @@
 ## Setup Android Studio
 - import *com.dabeeo.maps.indoormap-[latest_version].aar*
 - permission
-	```kotlin
-  	<uses-permission android:name="android.permission.INTERNET"/>  
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	```xml
+    <uses-permission android:name="android.permission.INTERNET"/>  
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 	```
 - minSdkVersion
 	```kotlin
-	minSdkVersion 24
+    minSdkVersion 24
 	```
 - dependencies
 	```kotlin
-	// RecyclerView - if you use androidx library 
-	implementation 'androidx.recyclerview:recyclerview:[your_androidx_library_version]'  
-	
-	// RecyclerView - if you use android support library  
-	// implementation 'com.android.support:recyclerview-v7:[your_support_library_version]'  
-	  
-	// Google AR  
-	implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.13.0'  
-	implementation 'com.google.ar.sceneform:core:1.13.0'  
-	implementation 'com.google.ar:core:1.13.0'  
-	  
-	// Picasso  
-	implementation 'com.squareup.picasso:picasso:2.71828'
+    // RecyclerView - if you use androidx library 
+    implementation 'androidx.recyclerview:recyclerview:[your_androidx_library_version]'  
+    
+    // RecyclerView - if you use android support library  
+    // implementation 'com.android.support:recyclerview-v7:[your_support_library_version]'  
+      
+    // Google AR  
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.13.0'  
+    implementation 'com.google.ar.sceneform:core:1.13.0'  
+    implementation 'com.google.ar:core:1.13.0'  
+      
+    // Picasso  
+    implementation 'com.squareup.picasso:picasso:2.71828'
 	```
 
 
 ## Debug Log
 - Enable **(Default)**
 	```kotlin
-	IndoorMapConfig.BUILD_DEBUG = true
+    IndoorMapConfig.BUILD_DEBUG = true
 	```
 - Disable
 	```kotlin
-	IndoorMapConfig.BUILD_DEBUG = false
+    IndoorMapConfig.BUILD_DEBUG = false
 	```
 
