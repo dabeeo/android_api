@@ -1,2 +1,2 @@
-include ':app', ':com.dabeeo.maps.indoormap-v1.0.0-release'
+include ':app', ':com.dabeeo.maps.indoormap-v1.01.03-release'
 rootProject.name='IndoorSampleProject'
