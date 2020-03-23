@@ -25,10 +25,35 @@ Dabeeo VPS는 Google AR Core 기술을 이용합니다.
 * Code : 8000
 * Message : NEED_UPDATE_OR_INSTALL_ARCORE	
 
+### build.gradle
+
+#### compileOptions
+```
+// AR CORE
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+```
+
+#### dependency
+```
+// Google AR
+implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
+implementation 'com.google.ar.sceneform:core:1.15.0'
+implementation 'com.google.ar.sceneform:assets:1.15.0'
+implementation "com.google.ar.sceneform:animation:1.15.0"
+
+
+// Provides ARCore Session and related resources.
+implementation 'com.google.ar:core:1.15.0'
+```
+
 ## Sample Code
 [VPSActivity](./VPSActivity.kt) 에서는 아래와 같은 기능이 있습니다.
 
 1. 내 위치 측위
 2. 2DContent 추가
+3. 3DContent 추가
 
 <img src="sample.gif" width="1280" height="720" />

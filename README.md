@@ -42,15 +42,27 @@
     // RecyclerView - if you use android support library  
     // implementation 'com.android.support:recyclerview-v7:[your_support_library_version]'  
       
-    // Google AR  
-    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.13.0'  
-    implementation 'com.google.ar.sceneform:core:1.13.0'  
-    implementation 'com.google.ar:core:1.13.0'  
+    // Google AR
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
+    implementation 'com.google.ar.sceneform:core:1.15.0'
+    implementation 'com.google.ar.sceneform:assets:1.15.0'
+    implementation "com.google.ar.sceneform:animation:1.15.0"
+    
+    
+    // Provides ARCore Session and related resources.
+    implementation 'com.google.ar:core:1.15.0'
       
     // Picasso  
     implementation 'com.squareup.picasso:picasso:2.71828'
 	```
-
+- compileOptions
+    ```
+    // AR CORE
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    ```
 
 ## Debug Log
 - Enable **(Default)**

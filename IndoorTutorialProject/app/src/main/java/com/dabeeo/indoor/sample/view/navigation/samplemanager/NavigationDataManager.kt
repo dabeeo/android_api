@@ -76,6 +76,7 @@ class NavigationDataManager constructor(
         mNavigation = Navigation(
             mOriginLocation,
             mDestinationLocation,
+            null,
             mapView,
             mPreviewEvent,
             when (navigationMode) {
@@ -139,7 +140,7 @@ class NavigationDataManager constructor(
     }
 
     private fun getRoutes(): Routes? {
-        return mNavigation?.routes ?: null
+        return mNavigation?.routes
     }
 
     private fun isReady() {

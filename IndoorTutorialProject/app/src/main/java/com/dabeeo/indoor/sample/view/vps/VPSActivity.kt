@@ -3,6 +3,7 @@ package com.dabeeo.indoor.sample.view.vps
 import android.Manifest
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,6 @@ import com.dabeeo.indoor.sample.databinding.ActivityVpsBinding
 import com.dabeeo.indoor.sample.toastError
 import com.dabeeo.indoor.sample.view.vps.data.ContentInfo
 import com.dabeeo.maps.basictype.Image
-import com.dabeeo.maps.basictype.Location
 import com.dabeeo.maps.basictype.Point
 import com.dabeeo.maps.draw.Marker
 import com.dabeeo.maps.draw.MarkerOptions
@@ -28,6 +28,8 @@ import com.dabeeo.maps.indoormap.data.MapInfo
 import com.dabeeo.maps.vps.VPSOptions
 import com.dabeeo.maps.vps.enums.VPSTrackingState
 import com.dabeeo.maps.vps.model.Content2D
+import com.dabeeo.maps.vps.model.Content3D
+import com.dabeeo.maps.vps.model.ContentEvent
 import com.dabeeo.maps.vps.views.VPSFragment
 import com.eddiej.indoordemo.views.layout.ContentView
 import java.util.*
@@ -61,7 +63,7 @@ class VPSActivity : AppCompatActivity() {
     private lateinit var mMyLocationMarker: Marker
 
     private val PERMISSIONS_REQUEST_CODE = 1000
-    private var mMyLocation:Location? = null
+    private var mMyLocation: com.dabeeo.maps.basictype.Location? = null
     private var mIsMarkerAdd = false
 
 
@@ -69,7 +71,7 @@ class VPSActivity : AppCompatActivity() {
      * VPS Event
      */
     private val mVPSEvent = object  : VPSEvent() {
-        override fun onLocation(location: Location?, direction: Double) {
+        override fun onLocation(location: com.dabeeo.maps.basictype.Location?, direction: Double) {
             location?.let {
                 val point = Point(it.x,it.y,0.0)
                 if(mMyLocation == null) {
@@ -115,6 +117,7 @@ class VPSActivity : AppCompatActivity() {
         override fun ready() {
             Log.i(TAG,"VPS init SUCCESS")
             init2DContents()            // 2DContent init
+            init3DContents()            // 3DContent init
         }
 
         override fun beginNetwork() {
@@ -259,8 +262,41 @@ class VPSActivity : AppCompatActivity() {
             "https://indoor.dabeeomaps.com/image/assets/logo_maps-3x-54848d261e3cc1fbd0465a25c50dcc7a.png"))
         content2D.view = contentView
         content2D.location =
-            Location(3060.887034100693, 1666.7951014514313, 1)
+            com.dabeeo.maps.basictype.Location(3060.887034100693, 1666.7951014514313, 1)
         content2DList.add(content2D)
-        mVPSFragment.initPoi(content2DList)
+        mVPSFragment.initContents2D(content2DList)
+    }
+
+    /**
+     * 3DContent init
+     */
+    private fun init3DContents() {
+        val content3DList = ArrayList<Content3D>()
+        val content3D = Content3D("TEST_3D")
+        content3D.scale = 1.0
+        content3D.contentUri = Uri.parse("https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/RiggedFigure/glTF/RiggedFigure.gltf")
+        content3D.setPosition(
+            com.dabeeo.maps.basictype.Location(
+                3186.96702497668,
+                1250.35618504251,
+                1
+            ), 1.0)
+        content3D.event = contentsEvent
+        content3DList.add(content3D)
+        mVPSFragment.initContents3D(content3DList)
+    }
+
+    private val contentsEvent = object  : ContentEvent() {
+        override fun error(id: String?, message: String?) {
+            Log.e(TAG,"id : $id, Render error")
+        }
+
+        override fun click(id: String?) {
+            Log.e(TAG,"id : $id, click event 발생")
+        }
+
+        override fun distance(id: String?, remainDistance: Double) {
+            Log.e(TAG,"id : $id, remainDistance : $remainDistance")
+        }
     }
 }
