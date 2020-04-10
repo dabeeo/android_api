@@ -16,15 +16,18 @@
 8. [VPS](/IndoorTutorialProject/app/src/main/java/com/dabeeo/indoor/sample/view/vps/)
 
 ## API 문서
-- 상세한 API는 [Android_국문_1.1.3.pdf](./Android_국문_1.1.3.pdf) 파일을 확인하세요.
+- 상세한 API는 [Android_국문_1.2.2.pdf](./Android_국문_1.2.2.pdf) 파일을 확인하세요.
 
 ## Download
-- [다비오맵스 홈페이지](https://indoor.dabeeomaps.com/service/android?) 내 좌측 [SDK 다운로드] 탭에서 다운로드
+- [다비오맵스 홈페이지](https://www.dabeeomaps.com/docs/android) 에서 다운로드
 
 
 ## Setup Android Studio
 - import *com.dabeeo.maps.indoormap-[latest_version].aar*
+
+### AndroidManifest
 - permission
+
 	```xml
     <uses-permission android:name="android.permission.INTERNET"/>  
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -32,11 +35,31 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 	```
+
+### build.gradle (project)
+- dependency
+
+	```
+	classpath 'com.google.ar.sceneform:plugin:1.15.0'
+	```
+
+
+### build.gradle(app)
+
+- plugin
+
+	```
+	apply plugin: 'com.google.ar.sceneform.plugin'
+	```
+
+
 - minSdkVersion
+
 	```kotlin
     minSdkVersion 24
 	```
 - dependencies
+
 	```kotlin
     // RecyclerView - if you use androidx library 
     implementation 'androidx.recyclerview:recyclerview:[your_androidx_library_version]'  
@@ -49,15 +72,19 @@
     implementation 'com.google.ar.sceneform:core:1.15.0'
     implementation 'com.google.ar.sceneform:assets:1.15.0'
     implementation "com.google.ar.sceneform:animation:1.15.0"
-    
+
     
     // Provides ARCore Session and related resources.
     implementation 'com.google.ar:core:1.15.0'
       
     // Picasso  
     implementation 'com.squareup.picasso:picasso:2.71828'
+    
+    //Gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
 	```
 - compileOptions
+
     ```
     // AR CORE
     compileOptions {
@@ -68,10 +95,12 @@
 
 ## Debug Log
 - Enable **(Default)**
+	
 	```kotlin
     IndoorMapConfig.BUILD_DEBUG = true
 	```
 - Disable
+	
 	```kotlin
     IndoorMapConfig.BUILD_DEBUG = false
 	```

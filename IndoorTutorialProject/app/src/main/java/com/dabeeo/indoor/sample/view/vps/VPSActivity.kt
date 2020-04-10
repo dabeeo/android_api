@@ -1,11 +1,13 @@
 package com.dabeeo.indoor.sample.view.vps
 
 import android.Manifest
+import android.animation.AnimatorSet
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dabeeo.indoor.sample.MyApp
@@ -14,6 +16,7 @@ import com.dabeeo.indoor.sample.databinding.ActivityVpsBinding
 import com.dabeeo.indoor.sample.toastError
 import com.dabeeo.indoor.sample.view.vps.data.ContentInfo
 import com.dabeeo.maps.basictype.Image
+import com.dabeeo.maps.basictype.Location
 import com.dabeeo.maps.basictype.Point
 import com.dabeeo.maps.draw.Marker
 import com.dabeeo.maps.draw.MarkerOptions
@@ -26,12 +29,14 @@ import com.dabeeo.maps.indoormap.MapView
 import com.dabeeo.maps.indoormap.data.FloorInfo
 import com.dabeeo.maps.indoormap.data.MapInfo
 import com.dabeeo.maps.vps.VPSOptions
+import com.dabeeo.maps.vps.enums.DirectionType
 import com.dabeeo.maps.vps.enums.VPSTrackingState
 import com.dabeeo.maps.vps.model.Content2D
 import com.dabeeo.maps.vps.model.Content3D
 import com.dabeeo.maps.vps.model.ContentEvent
 import com.dabeeo.maps.vps.views.VPSFragment
 import com.eddiej.indoordemo.views.layout.ContentView
+import com.google.ar.sceneform.animation.ModelAnimator
 import java.util.*
 
 
@@ -63,15 +68,80 @@ class VPSActivity : AppCompatActivity() {
     private lateinit var mMyLocationMarker: Marker
 
     private val PERMISSIONS_REQUEST_CODE = 1000
-    private var mMyLocation: com.dabeeo.maps.basictype.Location? = null
+    private var mMyLocation: Location? = null
     private var mIsMarkerAdd = false
+
+
+    private val contentsEvent = object  : ContentEvent<Content3D>() {
+
+        override fun error(content: Content3D?, message: String?) {
+            Log.e(TAG,"${content!!.id} Render error")
+        }
+
+        override fun click(content: Content3D?) {
+            Log.e(TAG,"${content!!.id} click event 발생")
+            if(content.id == "helicopter" && !mHeliopterFirst) {
+                val animatorSet = AnimatorSet()
+                animatorSet.playTogether(
+                    mVPSFragment.getContent3DMoveAnimator(content, content.location.x + 1000, content.location.y, 5000)
+                    , ModelAnimator(content.animationData[0], content.modelRenderable).setDuration(5000)
+                )
+                animatorSet.start()
+                mHeliopterFirst = true
+            } else if(content.id == "andy") {
+                ModelAnimator(content.animationData[0], content.modelRenderable).start()
+            }
+        }
+
+        override fun distance(content: Content3D?, remainDistance: Double) {
+        }
+    }
+
+    private val mHelicopter = Content3D("helicopter").apply {
+        contentUri = Uri.parse("helicopter.sfb")
+        setPosition(
+            Location(
+                3051.77769424003,
+                1250.35618504251,
+                1
+            ), 2.0)
+        scale = 0.5
+        setDirection(90.0,DirectionType.FIXING)
+        event = contentsEvent
+    }
+    private var mHeliopterFirst = false
+
+
+    private val mAndy = Content3D("andy").apply {
+        contentUri = Uri.parse("andy.sfb")
+        setPosition(
+            Location(
+                3319.60906277984,
+                1443.78890183607,
+                1
+            ), 0.0)
+        scale = 2.0
+        event = contentsEvent
+    }
+
+    private val mAvocado = Content3D("Avocado").apply {
+        contentUri = Uri.parse("https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf")
+        setPosition(
+            Location(
+                2772.2763113399,
+                1443.93351434154,
+                1
+            ), 1.0)
+        scale = 5.0
+    }
+
 
 
     /**
      * VPS Event
      */
     private val mVPSEvent = object  : VPSEvent() {
-        override fun onLocation(location: com.dabeeo.maps.basictype.Location?, direction: Double) {
+        override fun onLocation(location: Location?, direction: Double) {
             location?.let {
                 val point = Point(it.x,it.y,0.0)
                 if(mMyLocation == null) {
@@ -272,31 +342,11 @@ class VPSActivity : AppCompatActivity() {
      */
     private fun init3DContents() {
         val content3DList = ArrayList<Content3D>()
-        val content3D = Content3D("TEST_3D")
-        content3D.scale = 1.0
-        content3D.contentUri = Uri.parse("https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/RiggedFigure/glTF/RiggedFigure.gltf")
-        content3D.setPosition(
-            com.dabeeo.maps.basictype.Location(
-                3186.96702497668,
-                1250.35618504251,
-                1
-            ), 1.0)
-        content3D.event = contentsEvent
-        content3DList.add(content3D)
+        content3DList.add(mHelicopter)
+        content3DList.add(mAndy)
+        content3DList.add(mAvocado)
         mVPSFragment.initContents3D(content3DList)
     }
 
-    private val contentsEvent = object  : ContentEvent() {
-        override fun error(id: String?, message: String?) {
-            Log.e(TAG,"id : $id, Render error")
-        }
 
-        override fun click(id: String?) {
-            Log.e(TAG,"id : $id, click event 발생")
-        }
-
-        override fun distance(id: String?, remainDistance: Double) {
-            Log.e(TAG,"id : $id, remainDistance : $remainDistance")
-        }
-    }
 }
