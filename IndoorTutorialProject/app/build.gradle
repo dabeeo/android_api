@@ -70,7 +70,7 @@ dependencies {
     sceneform.asset('sampledata/andy/andy_dance.fbx',
             'default',
             'sampledata/andy/andy_dance.sfa',
-            'src/main/assets/andy_dance',
+            'src/main/assets/andy',
             ['sampledata/andy/andy_wave_r.fbx', 'sampledata/andy/andy_wave_l.fbx'])
 
     sceneform.asset('sampledata/helicopter/helicopter.fbx',
