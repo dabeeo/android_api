@@ -95,4 +95,4 @@ sceneform.asset('sampledata/helicopter/helicopter.fbx',
 3. 3DContent 추가
 4. 3DContent 애니메이션 실행
 
-<img src="sample.gif" width="1280" height="720" />
+<img src="sample.gif" width="236.5" height="500" />
