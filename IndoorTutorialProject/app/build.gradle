@@ -60,6 +60,6 @@ dependencies {
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation project(path: ':com.dabeeo.maps.indoormap-v1.01.03-release')
+    implementation project(path: ':com.dabeeo.maps.indoormap-v01.02.02-release')
 }
 
