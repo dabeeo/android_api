@@ -77,5 +77,8 @@ dependencies {
             'default',
             'sampledata/helicopter/helicopter.sfa',
             'src/main/assets/helicopter')
+
+    implementation 'com.google.android:flexbox:1.0.0'
+
 }
 

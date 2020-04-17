@@ -54,7 +54,7 @@ import java.util.*
  * Create by soyeongheo on 2020-03-11.
  * Description :
  */
-class VPSActivity : AppCompatActivity() {
+class VPSActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mVPSFragment: VPSFragment by lazy {
         (supportFragmentManager.findFragmentById(R.id.fragment_vps) as VPSFragment)
@@ -62,18 +62,19 @@ class VPSActivity : AppCompatActivity() {
 
     companion object {
         val TAG = VPSActivity::class.java.simpleName
+        const val CONTENT_ID = "_Content_"
     }
 
     private lateinit var mMapView: MapView
     private lateinit var mMyLocationMarker: Marker
 
+    private lateinit var mMapInfo: MapInfo
+
     private val PERMISSIONS_REQUEST_CODE = 1000
     private var mMyLocation: Location? = null
     private var mIsMarkerAdd = false
 
-
-    private val contentsEvent = object  : ContentEvent<Content3D>() {
-
+    private val content3DEvent = object  : ContentEvent<Content3D>() {
         override fun error(content: Content3D?, message: String?) {
             Log.e(TAG,"${content!!.id} Render error")
         }
@@ -107,10 +108,9 @@ class VPSActivity : AppCompatActivity() {
             ), 2.0)
         scale = 0.5
         setDirection(90.0,DirectionType.FIXING)
-        event = contentsEvent
+        event = content3DEvent
     }
     private var mHeliopterFirst = false
-
 
     private val mAndy = Content3D("andy").apply {
         contentUri = Uri.parse("andy.sfb")
@@ -121,9 +121,8 @@ class VPSActivity : AppCompatActivity() {
                 1
             ), 0.0)
         scale = 2.0
-        event = contentsEvent
+        event = content3DEvent
     }
-
     private val mAvocado = Content3D("Avocado").apply {
         contentUri = Uri.parse("https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf")
         setPosition(
@@ -134,7 +133,6 @@ class VPSActivity : AppCompatActivity() {
             ), 1.0)
         scale = 5.0
     }
-
 
 
     /**
@@ -186,8 +184,8 @@ class VPSActivity : AppCompatActivity() {
 
         override fun ready() {
             Log.i(TAG,"VPS init SUCCESS")
-            init2DContents()            // 2DContent init
-            init3DContents()            // 3DContent init
+            add2DContents()            // 2DContent init
+            add3DContentList()            // 3DContent init
         }
 
         override fun beginNetwork() {
@@ -212,6 +210,7 @@ class VPSActivity : AppCompatActivity() {
     private val mMapEvent = object : MapEvent() {
         override fun ready(mapView: MapView?, mapInfo: MapInfo?) {
             mMapView = mapView!!
+            mMapInfo = mapInfo!!
             mMyLocationMarker = initMyLocationMarker()          // 내 위치 마커 init
             mMyLocationMarker.addTo()                           // 내 위치 마커 추가
         }
@@ -229,8 +228,7 @@ class VPSActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    protected val binding: ActivityVpsBinding by lazy {
         DataBindingUtil.setContentView<ActivityVpsBinding>(this,R.layout.activity_vps).apply {
             if(isPermissionGranted()) {
                 initVPSFragment()
@@ -253,8 +251,17 @@ class VPSActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding.btnAdd2d.setOnClickListener(this)
+        binding.btnAdd3d.setOnClickListener(this)
+        binding.btnRemove2d.setOnClickListener(this)
+        binding.btnRemove3d.setOnClickListener(this)
+    }
+
+
     /**
-     *
+     * VPSFragment init
      */
     private fun initVPSFragment() {
         val mapOptions = object : MapOptions() {}.apply {
@@ -320,33 +327,109 @@ class VPSActivity : AppCompatActivity() {
         }
     }
 
+    private val content2DList = mutableListOf<Content2D>()
+    private val content3DList = mutableListOf<Content3D>()
+    private val content3DUriList = listOf("andy_dance.sfb","helicopter.sfb","andy.sfb")
 
-    /**
-     * 2DContent init
-     */
-    private fun init2DContents() {
-        val content2DList = ArrayList<Content2D>()
-        val content2D = Content2D()
-        val contentView = ContentView(applicationContext)
-        contentView.setContentInfo(ContentInfo("휴게실","안락한 안마의자와 휴식 취해 해보아요.",
-            "https://indoor.dabeeomaps.com/image/assets/logo_maps-3x-54848d261e3cc1fbd0465a25c50dcc7a.png"))
-        content2D.view = contentView
-        content2D.location =
-            com.dabeeo.maps.basictype.Location(3060.887034100693, 1666.7951014514313, 1)
-        content2DList.add(content2D)
-        mVPSFragment.initContents2D(content2DList)
-    }
 
     /**
      * 3DContent init
      */
-    private fun init3DContents() {
-        val content3DList = ArrayList<Content3D>()
+    private fun add3DContentList() {
         content3DList.add(mHelicopter)
         content3DList.add(mAndy)
         content3DList.add(mAvocado)
-        mVPSFragment.initContents3D(content3DList)
+        mVPSFragment.addContent3DList(content3DList)
     }
 
+    fun addContent3D () {
+        val content3D = randomContent3D(content3DList.size)
+        content3D.event = content3DEvent
+        content3D.visibleDistance = 10000.0
+        content3D.setPosition(Location(mMyLocationMarker.position.x + 200,mMyLocationMarker.position.y,1),1.0)
+        mVPSFragment.addContent3D(content3D)
+        content3DList.add(content3D)
+    }
+
+    private fun randomContent3D(size : Int) : Content3D {
+        val uri = Uri.parse(content3DUriList[java.util.Random().nextInt(content3DUriList.size)])
+        val content3D = Content3D(uri.toString() + "_"+size.toString() + "_TEST")
+        //random uri
+        content3D.contentUri = uri
+        return content3D
+    }
+
+    fun removeContent3D() {
+        if(content3DList.size == 0) {
+            toastError("추가된 content3D가 없습니다.")
+        } else {
+            val randomIndex = java.util.Random().nextInt(content3DList.size)
+            val content3D = content3DList[randomIndex]
+            toastError("${content3D.id} 삭제~")
+            mVPSFragment.removeContent3D(content3D)
+            content3DList.remove(content3D)
+        }
+    }
+
+    /**
+     * 2DContent init
+     */
+    private fun add2DContents() {
+        val content2D = Content2D(content2DList.size.toString() + CONTENT_ID + "2D")
+        content2D.view = getContentView()
+        content2D.setPosition(Location(3060.887034100693, 1666.7951014514313, 1),1.5)
+        content2DList.add(content2D)
+        mVPSFragment.addContent2D(content2D)
+    }
+
+    private fun getContentView() : ContentView {
+        val contentView = ContentView(applicationContext)
+        contentView.setContentInfo(ContentInfo("휴게실","안락한 안마의자와 휴식 취해 해보아요.",
+            "https://indoor.dabeeomaps.com/image/assets/logo_maps-3x-54848d261e3cc1fbd0465a25c50dcc7a.png"))
+        return contentView
+    }
+
+    fun addContent2D () {
+        val content2D = Content2D(content2DList.size.toString() + CONTENT_ID + "2D")
+        content2D.view = getContentView()
+        content2D.setPosition(Location(mMyLocationMarker.position.x + 200,mMyLocationMarker.position.y,1),1.5)
+        content2D.event = content3DEvent
+        content2D.visibleDistance = 10000.0
+        mVPSFragment.addContent2D(content2D)
+        content2DList.add(content2D)
+    }
+
+    fun removeContent2D() {
+        if(content2DList.size == 0) {
+            toastError("추가된 content2D가 없습니다.")
+        } else {
+            val randomIndex = java.util.Random().nextInt(content2DList.size)
+            val content2D = content2DList[randomIndex]
+            toastError("${content2D.id} 삭제~")
+            mVPSFragment.removeContent2D(content2D)
+            content2DList.remove(content2D)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if(mMyLocation == null) {
+            toastError("위치를 찾아주세요~")
+            return
+        }
+        when(v!!.id) {
+            R.id.btn_add_2d -> {
+                addContent2D()
+            }
+            R.id.btn_add_3d -> {
+                addContent3D()
+            }
+            R.id.btn_remove_2d -> {
+                removeContent2D()
+            }
+            R.id.btn_remove_3d -> {
+                removeContent3D()
+            }
+        }
+    }
 
 }

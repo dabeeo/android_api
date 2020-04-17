@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -9,12 +8,49 @@
         <fragment
             android:id="@+id/fragment_vps"
             android:name="com.dabeeo.maps.vps.views.VPSFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flexDirection="row"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_vps"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/btn_add_3d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add 3D"
+                app:layout_flexGrow="1" />
+
+            <Button
+                android:id="@+id/btn_remove_3d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="remove 3D"
+                app:layout_flexGrow="1" />
+
+            <Button
+                android:id="@+id/btn_add_2d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add 2D"
+                app:layout_flexGrow="1" />
+
+            <Button
+                android:id="@+id/btn_remove_2d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="remove 2D"
+                app:layout_flexGrow="1" />
+        </com.google.android.flexbox.FlexboxLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
