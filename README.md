@@ -16,7 +16,7 @@
 8. [VPS](/IndoorTutorialProject/app/src/main/java/com/dabeeo/indoor/sample/view/vps/)
 
 ## API 문서
-- 상세한 API는 [Android_국문_1.2.2.pdf](./Android_국문_1.2.2.pdf) 파일을 확인하세요.
+- 상세한 API는 [Android_국문_1.2.3.pdf](./Android_국문_1.2.3.pdf) 파일을 확인하세요.
 - [SDK ChangeLog](./ChangLog.md)
 
 
