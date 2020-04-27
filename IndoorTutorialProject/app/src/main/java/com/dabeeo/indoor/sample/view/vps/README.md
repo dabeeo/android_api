@@ -91,8 +91,8 @@ sceneform.asset('sampledata/helicopter/helicopter.fbx',
 [VPSActivity](./VPSActivity.kt) 에서는 아래와 같은 기능이 있습니다.
 
 1. 내 위치 측위
-2. 2DContent 추가
-3. 3DContent 추가
+2. 2DContent 추가,삭제
+3. 3DContent 추가,삭제
 4. 3DContent 애니메이션 실행
 
 <img src="sample.gif" width="236.5" height="500" />
