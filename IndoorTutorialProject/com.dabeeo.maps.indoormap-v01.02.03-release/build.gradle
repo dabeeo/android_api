@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('com.dabeeo.maps.indoormap-v01.02.03-release.aar'))
