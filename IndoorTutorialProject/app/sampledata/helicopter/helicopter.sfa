@@ -1,0 +1,74 @@
+{
+  animations: [
+    {
+      clips: [
+        {
+          name: 'Main',
+        },
+      ],
+      path: 'sampledata/helicopter/helicopter.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'Palette',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'Palette',
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/helicopter/helicopter.fbx',
+    name: 'helicopter',
+    recenter: 'root',
+    scale: 0.065763000000000002,
+  },
+  samplers: [
+    {
+      file: 'sampledata/helicopter/helicopter.fbm/Palette.png',
+      name: 'Palette',
+      pipeline_name: 'helicopter.fbm/Palette.png',
+    },
+  ],
+  version: '0.54:2',
+}
