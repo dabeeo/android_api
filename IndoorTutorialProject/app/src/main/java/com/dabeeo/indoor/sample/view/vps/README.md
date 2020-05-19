@@ -94,5 +94,6 @@ sceneform.asset('sampledata/helicopter/helicopter.fbx',
 2. 2DContent 추가,삭제
 3. 3DContent 추가,삭제
 4. 3DContent 애니메이션 실행
+5. VPSFragment MapView 드래그,리사이즈
 
 <img src="sample.gif" width="236.5" height="500" />
