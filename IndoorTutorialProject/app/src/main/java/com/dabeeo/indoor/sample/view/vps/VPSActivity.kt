@@ -275,10 +275,12 @@ class VPSActivity : AppCompatActivity(), View.OnClickListener {
         val vpsOptions = object  : VPSOptions(applicationContext){}.apply {
             timeInterval = 100                  // 측위 interval 설정
         }
-        mVPSFragment.init(vpsOptions,mapOptions,mVPSEvent, mMapEvent, MyApp.AUTHORIZATION)
 
-        mVPSFragment.setMapViewHandle(R.drawable.start_mark)
-        mVPSFragment.setMapViewHandleBackground(R.color.davy_grey)
+        mVPSFragment.apply {
+            init(vpsOptions,mapOptions,mVPSEvent, mMapEvent, MyApp.AUTHORIZATION)
+            setMapViewHandle(com.dabeeo.indoor.sample.R.drawable.start_mark)
+            setMapViewHandleBackground(com.dabeeo.indoor.sample.R.color.davy_grey)
+        }
 
 
     }
