@@ -276,6 +276,11 @@ class VPSActivity : AppCompatActivity(), View.OnClickListener {
             timeInterval = 100                  // 측위 interval 설정
         }
         mVPSFragment.init(vpsOptions,mapOptions,mVPSEvent, mMapEvent, MyApp.AUTHORIZATION)
+
+        mVPSFragment.setMapViewHandle(R.drawable.start_mark)
+        mVPSFragment.setMapViewHandleBackground(R.color.davy_grey)
+
+
     }
 
     /**
