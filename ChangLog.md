@@ -29,3 +29,10 @@
 
 #### Content2D.class
 * ```Content2D.setLocation``` API가 ```Content2D.setPosition```로 변경하였습니다.
+
+## v1.2.4
+### 새로운 기능
+#### VPSFragment.class
+* MapView에 Handle을 추가하여 드래그 & 리사이즈 기능을 제공합니다. 
+	* ```VPSFragment.setMapViewHandle```
+	* ```VPSFragment.setMapViewHandleBackground```
