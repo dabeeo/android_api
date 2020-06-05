@@ -36,3 +36,13 @@
 * MapView에 Handle을 추가하여 드래그 & 리사이즈 기능을 제공합니다. 
 	* ```VPSFragment.setMapViewHandle```
 	* ```VPSFragment.setMapViewHandleBackground```
+
+## v1.2.5
+### 새로운 기능
+#### VPSFragment.class
+* MapView에 Handle enable, disable, move 기능 추가 
+	* ```VPSFragment.mapViewHandleEnable```
+	* ```VPSFragment.moveBar```
+* RouteDetailInfo에 index 정보 추가 
+	* ```Routes. RouteDetailInfo.idx```
+	

@@ -14,8 +14,8 @@ android {
         applicationId "com.dabeeo.indoor.sample"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 10204
-        versionName "1.02.04"
+        versionCode 10205
+        versionName "1.02.05"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
